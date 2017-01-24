@@ -6,9 +6,7 @@
 package co.plan.backend.persistence.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Concesionario.findByNit", query = "SELECT c FROM Concesionario c WHERE c.nit = :nit")
     , @NamedQuery(name = "Concesionario.findByNombre", query = "SELECT c FROM Concesionario c WHERE c.nombre = :nombre")
     , @NamedQuery(name = "Concesionario.findByTelefono", query = "SELECT c FROM Concesionario c WHERE c.telefono = :telefono")
-    , @NamedQuery(name = "Concesionario.findByDireccion", query = "SELECT c FROM Concesionario c WHERE c.direccion = :direccion")})
+    , @NamedQuery(name = "Concesionario.findByDireccion", query = "SELECT c FROM Concesionario c WHERE c.direccion = :direccion")
+    , @NamedQuery(name = "Concesionario.findByClave", query = "SELECT c FROM Concesionario c WHERE c.clave = :clave")})
 public class Concesionario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,8 +56,11 @@ public class Concesionario implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "direccion")
     private String direccion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoConcesionario")
-    private Collection<Vehiculo> vehiculoCollection;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "clave")
+    private String clave;
 
     public Concesionario() {
     }
@@ -69,11 +69,12 @@ public class Concesionario implements Serializable {
         this.nit = nit;
     }
 
-    public Concesionario(Integer nit, String nombre, String telefono, String direccion) {
+    public Concesionario(Integer nit, String nombre, String telefono, String direccion, String clave) {
         this.nit = nit;
         this.nombre = nombre;
         this.telefono = telefono;
         this.direccion = direccion;
+        this.clave = clave;
     }
 
     public Integer getNit() {
@@ -108,13 +109,12 @@ public class Concesionario implements Serializable {
         this.direccion = direccion;
     }
 
-    @XmlTransient
-    public Collection<Vehiculo> getVehiculoCollection() {
-        return vehiculoCollection;
+    public String getClave() {
+        return clave;
     }
 
-    public void setVehiculoCollection(Collection<Vehiculo> vehiculoCollection) {
-        this.vehiculoCollection = vehiculoCollection;
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 
     @Override

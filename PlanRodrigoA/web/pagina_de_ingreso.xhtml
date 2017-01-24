@@ -17,15 +17,54 @@ and open the template in the editor.
         <h:form>
             <p:messages autoUpdate="true" showDetail="true" />
             <h:panelGrid columns="2">
-                <p:outputLabel for="usuarioIngreso" value="Usuario"/>
-                <p:inputText id="usuarioIngreso" value="#{clienteManagedBean.cliente.usuario}" required="true"/>
+                <p:outputLabel for="concesionarioIngreso" value="Concesionario"/>
+                <p:inputText id="concesionarioIngreso" value="#{concesionarioManagedBean.concesionario.nombre}" required="true"/>
                 <p:outputLabel for="claveIngreso" value="Clave"/>
-                <p:inputText id="claveIngreso" value="#{clienteManagedBean.cliente.clave}" required="true"/>
+                <p:inputText id="claveIngreso" value="#{concesionarioManagedBean.concesionario.clave}" required="true"/>
                 <h:column />
-                <p:commandButton value="Iniciar Sesión" actionListener="#{clienteManagedBean.iniciarSesion()}"/>
-                               
+                <p:commandButton value="Iniciar Sesión" action="#{concesionarioManagedBean.iniciarSesion()}"/>   
+            </h:panelGrid>
+
+        </h:form>
+        <h:form>
+                <h:panelGrid columns="35">
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                <h:column />
+                
+                <p:commandButton value="Crear cuenta" action="#{concesionarioManagedBean.crearCuenta()}" style="width: 152px;" />
             </h:panelGrid>
         </h:form>
-        <div>TODO write content</div>
+        
     </h:body>
 </html>

@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
@@ -34,7 +35,7 @@ public class ClienteManagedBean implements Serializable{
     public ClienteManagedBean() {
     }
     
-    @SessionScoped
+    @PostConstruct
     public void init(){
         cliente = new Cliente();
     } 
@@ -53,7 +54,7 @@ public class ClienteManagedBean implements Serializable{
         try {
             cl = clienteFacadeLocal.iniciarSesion(cliente);
             if (cl!=null) {
-                redireccion = "/protegido/principal?faces-redirect=true";
+                redireccion = "/Protegido/principal";
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso","Usuario incorrecto"));
 
@@ -62,6 +63,19 @@ public class ClienteManagedBean implements Serializable{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Aviso","Error"));
         }
         return  redireccion ;
+    }
+
+    public String crearCuenta(){
+        String redireccioncrear = null;
+        try {
+            redireccioncrear = "/Registro_usuario";
+        } catch (Exception e) {
+            //
+        }
+        return redireccioncrear ;
+    }
+    public void registrar(){
+        clienteFacadeLocal.create(cliente);
     }
     
 }
