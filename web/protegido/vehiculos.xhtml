@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/template/planTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <p:panelGrid columns="2">
+               
+                <h:form id="tabla">
+                    <h1><h:outputText value="Lista de vehiculos"/></h1>
+                    <p:dataTable value="#{vehiculoManagedBean.listarVehiculo()}" var="item">
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CodigoVehiculo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoVehiculo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Marca"/>
+                            </f:facet>
+                            <h:outputText value="#{item.marca}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Modelo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.modelo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Precio"/>
+                            </f:facet>
+                            <h:outputText value="$#{item.precio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CodigoConcesionario"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoConcesionario.nombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value=""/>
+                            </f:facet>
+                            <p:commandButton value="Vender" update=":dlg2" type="view" onclick="PF('dlg2').show();" action="#{vehiculoManagedBean.setVehiculo(item)}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+        </p:panelGrid>
+        <p:dialog header="Modal Dialog" id="dlg2" widgetVar="dlg2" modal="true">
+                <h:form id="dialogo">
+                    <p:panelGrid columns="2">
+                        <h:outputText value="CodigoVehiculo:"/>
+                        <h:outputText value="#{vehiculoManagedBean.vehiculo.codigoVehiculo}" title="CodigoVehiculo"/>
+                        <h:outputText value="Marca:"/>
+                        <h:outputText value="#{vehiculoManagedBean.vehiculo.marca}" title="Marca"/>
+                        <h:outputText value="Modelo:"/>
+                        <h:outputText value="#{vehiculoManagedBean.vehiculo.modelo}" title="Modelo"/>
+                        <h:outputText value="Precio:"/>
+                        <h:outputText value="#{vehiculoManagedBean.vehiculo.precio}" title="Precio"/>
+                    </p:panelGrid>
+                    <h1><h:outputText value="Create/Edit"/></h1>
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="IdCliente:" for="idCliente" />
+                        <p:selectOneMenu id="idCliente" value="#{ventaManagedBean.venta.idCliente}" required="true" requiredMessage="The IdCliente field is required.">
+                            <!-- TODO: update below reference to list of available items-->
+                            <f:selectItems value="#{clienteManagedBean.listarCliente()}" var="cli" itemLabel="#{cli.idCliente} #{cli.nombre}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="Vender" action="#{ventaManagedBean.registrar(vehiculoManagedBean.vehiculo)}"/>
+                    <p:commandButton value="Registrar cliente" action="/protegido/clientes.plan"/>
+                </h:form>
+        </p:dialog>  
+    </ui:define>
+
+</ui:composition>
