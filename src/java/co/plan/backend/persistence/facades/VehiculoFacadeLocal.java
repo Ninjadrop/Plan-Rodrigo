@@ -30,4 +30,5 @@ public interface VehiculoFacadeLocal {
 
     int count();
     
+    List<Vehiculo> filtrarPrecio(Integer i);
 }

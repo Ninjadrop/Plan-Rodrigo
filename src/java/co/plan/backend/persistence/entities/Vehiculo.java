@@ -37,8 +37,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Vehiculo.findByCodigoVehiculo", query = "SELECT v FROM Vehiculo v WHERE v.codigoVehiculo = :codigoVehiculo")
     , @NamedQuery(name = "Vehiculo.findByMarca", query = "SELECT v FROM Vehiculo v WHERE v.marca = :marca")
     , @NamedQuery(name = "Vehiculo.findByModelo", query = "SELECT v FROM Vehiculo v WHERE v.modelo = :modelo")
-    , @NamedQuery(name = "Vehiculo.findByPrecio", query = "SELECT v FROM Vehiculo v WHERE v.precio = :precio")})
+    , @NamedQuery(name = "Vehiculo.findByPrecio", query = "SELECT v FROM Vehiculo v WHERE v.precio = :precio")
+    , @NamedQuery(name = "Vehiculo.precioConsulta", query = "SELECT v FROM Vehiculo v WHERE v.precio > :precio")})
 public class Vehiculo implements Serializable, IEntity {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "precio")
+    private int precio;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,10 +61,6 @@ public class Vehiculo implements Serializable, IEntity {
     @NotNull
     @Column(name = "modelo")
     private int modelo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "precio")
-    private double precio;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVehiculo")
     private Collection<Venta> ventasCollection;
     @JoinColumn(name = "codigoConcesionario", referencedColumnName = "nit")
@@ -72,7 +74,7 @@ public class Vehiculo implements Serializable, IEntity {
         this.codigoVehiculo = codigoVehiculo;
     }
 
-    public Vehiculo(Integer codigoVehiculo, String marca, int modelo, double precio) {
+    public Vehiculo(Integer codigoVehiculo, String marca, int modelo, int precio) {
         this.codigoVehiculo = codigoVehiculo;
         this.marca = marca;
         this.modelo = modelo;
@@ -103,13 +105,6 @@ public class Vehiculo implements Serializable, IEntity {
         this.modelo = modelo;
     }
 
-    public double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
 
     @XmlTransient
     public Collection<Venta> getVentasCollection() {
@@ -156,5 +151,13 @@ public class Vehiculo implements Serializable, IEntity {
     @Override
     public String getPK() {
         return codigoVehiculo.toString();
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
     }
 }

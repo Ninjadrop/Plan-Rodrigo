@@ -8,10 +8,53 @@
 
     <ui:define name="content">
         <p:panelGrid columns="2">
-               
+            <h:panelGrid columns="1">
+                <h:form>
+                    <h:outputLabel value="Filtrar precio" />
+                    <h:inputText value="#{vehiculoManagedBean.precio}">
+                        <f:ajax listener="#{vehiculoManagedBean.filtrarPrecio()}" render="vehiculosLista" event="keyup"/>
+                    </h:inputText>
+                </h:form>
+                <h:form id="vehiculosLista">
+                        <h1><h:outputText value="List"/></h1>
+                        <p:dataTable value="#{vehiculoManagedBean.listaPrecioVehiculo}" var="item">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CodigoVehiculo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigoVehiculo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Marca"/>
+                                </f:facet>
+                                <h:outputText value="#{item.marca}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Modelo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.modelo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Precio"/>
+                                </f:facet>
+                                <h:outputText value="$#{item.precio}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="CodigoConcesionario"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigoConcesionario.nombre}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+
+            </h:panelGrid>
                 <h:form id="tabla">
                     <h1><h:outputText value="Lista de vehiculos"/></h1>
-                    <p:dataTable value="#{vehiculoManagedBean.listarVehiculo()}" var="item">
+                    <p:dataTable id="dtVehiculos" value="#{vehiculoManagedBean.listarVehiculo()}" var="item">
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="CodigoVehiculo"/>
@@ -38,17 +81,19 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="CodigoConcesionario"/>
+                                <h:outputText value="Concesionario"/>
                             </f:facet>
                             <h:outputText value="#{item.codigoConcesionario.nombre}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value=""/>
-                            </f:facet>
-                            <p:commandButton value="Vender" update=":dlg2" type="view" onclick="PF('dlg2').show();" action="#{vehiculoManagedBean.setVehiculo(item)}" />
-                        </p:column>
                     </p:dataTable>
+                    <h:commandLink>
+                            <p:commandButton value="PDF" />
+                            <p:dataExporter type="pdf" target="dtVehiculos" fileName="vehiculos" />
+                    </h:commandLink>
+                    <h:commandLink>
+                            <p:commandButton value="EXCEL" />
+                            <p:dataExporter type="xls" target="dtVehiculos" fileName="vehiculos" />
+                    </h:commandLink>
                 </h:form>
         </p:panelGrid>
         <p:dialog header="Modal Dialog" id="dlg2" widgetVar="dlg2" modal="true">

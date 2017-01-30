@@ -17,12 +17,11 @@
             <ui:insert name="top">
                 <h:form>
                     <p:menubar>
-                        <p:menuitem value="Inicio" outcome="/protegido/principal.plan" style="padding-right: 20px; padding-left: 30px" />
-                        <p:menuitem value="Concesionario" outcome="/protegido/concesionario.plan" style="padding-right: 30px;" />
-                        <p:menuitem value="Ventas" outcome="/protegido/ventas.plan" style="padding-right: 30px;"/>
-                        <p:menuitem value="Clientes" outcome="/protegido/clientes.plan" style="padding-right: 30px;"/>
-                        <p:menuitem value="Vehículos" outcome="/protegido/vehiculos.plan"  style="padding-right: 30px;"/>
-                        <p:menuitem value="Cerrar Sesión"  action="#{sessionManagedBean.cerrarSesion()}" style="margin-left: 630px !important;" icon="ui-icon-power" />
+                        <p:menuitem value="Inicio" outcome="/protegido/principal.plan" style="padding-right: 20px; padding-left: 30px" icon="ui-icon-home"  />
+                        <p:menuitem value="Ventas" outcome="/protegido/ventas.plan" style="padding-right: 30px;" icon="ui-icon-suitcase" />
+                        <p:menuitem value="Clientes" outcome="/protegido/clientes.plan" style="padding-right: 30px;" icon="ui-icon-person" />
+                        <p:menuitem value="Vehículos" outcome="/protegido/vehiculos.plan"  style="padding-right: 30px;" icon="ui-icon-cart" />
+                        <p:menuitem value="Cerrar Sesión"  action="#{sessionManagedBean.cerrarSesion()}" style="margin-left: 640px !important;" icon="ui-icon-power" />
                     </p:menubar>
                 </h:form>
             </ui:insert>

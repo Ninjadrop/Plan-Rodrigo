@@ -31,7 +31,7 @@
 
                 <h:form id="tabla">
                     <h3>Lista ventas</h3>
-                    <p:dataTable value="#{ventaManagedBean.listarVenta()}" var="item">
+                    <p:dataTable id="dtVentas" value="#{ventaManagedBean.listarVenta()}" var="item">
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Cod.Venta"/>
@@ -71,6 +71,14 @@
                             <h:outputText value="$#{item.idVehiculo.precio}"/>
                         </p:column>
                     </p:dataTable>
+                    <h:commandLink>
+                            <p:commandButton value="PDF" />
+                            <p:dataExporter type="pdf" target="dtVentas" fileName="ventas" />
+                    </h:commandLink>
+                    <h:commandLink>
+                            <p:commandButton value="EXCEL" />
+                            <p:dataExporter type="xls" target="dtVentas" fileName="ventas" />
+                    </h:commandLink>
                 </h:form>
             </f:view>
 

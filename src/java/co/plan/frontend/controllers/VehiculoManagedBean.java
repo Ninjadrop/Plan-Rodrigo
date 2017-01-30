@@ -6,6 +6,7 @@
 package co.plan.frontend.controllers;
 
 import co.plan.backend.persistence.entities.Vehiculo;
+import static co.plan.backend.persistence.entities.Vehiculo_.precio;
 import co.plan.backend.persistence.facades.VehiculoFacadeLocal;
 import co.plan.frontend.logic.IManagedBean;
 import java.io.Serializable;
@@ -25,6 +26,8 @@ public class VehiculoManagedBean implements Serializable, IManagedBean<Vehiculo>
     
     @EJB private VehiculoFacadeLocal vehiculoFacadeLocal;
     private Vehiculo vehiculo;
+    private List<Vehiculo> listaPrecioVehiculo;
+    private int precio;
     
     public VehiculoManagedBean() {
     }
@@ -54,5 +57,23 @@ public class VehiculoManagedBean implements Serializable, IManagedBean<Vehiculo>
     @Override
     public Vehiculo getObjectByKey(Integer key) {
         return vehiculoFacadeLocal.find(key);
+    }
+
+    public List<Vehiculo> getListaPrecioVehiculo() {
+        return listaPrecioVehiculo;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+    
+    
+    
+    public void filtrarPrecio (){
+        this.listaPrecioVehiculo = vehiculoFacadeLocal.filtrarPrecio(precio);
     }
 }

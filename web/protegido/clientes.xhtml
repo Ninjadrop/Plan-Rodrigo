@@ -27,7 +27,7 @@
             <f:view>
                 <h:form id="tabla">
                     <h3>Lista Clientes</h3>
-                    <p:dataTable value="#{clienteManagedBean.listarCliente()}" var="item">
+                    <p:dataTable id="dtClientes" value="#{clienteManagedBean.listarCliente()}" var="item">
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="IdCliente"/>
@@ -53,6 +53,14 @@
                             <h:outputText value="#{item.direccion}"/>
                         </p:column>
                     </p:dataTable>
+                    <h:commandLink>
+                            <p:commandButton value="PDF" />
+                            <p:dataExporter type="pdf" target="dtClientes" fileName="clientes" />
+                    </h:commandLink>
+                    <h:commandLink>
+                            <p:commandButton value="EXCEL" />
+                            <p:dataExporter type="xls" target="dtClientes" fileName="clientes" />
+                    </h:commandLink>
                 </h:form>
             </f:view>
 
